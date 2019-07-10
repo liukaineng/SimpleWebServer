@@ -7,6 +7,8 @@ path=require("path");
 var app= express();
 //设置模板引擎为ejs
 app.set('view engine','ejs');
+//设置引擎模板的路径，默认为同级目录的views
+app.set('views', path.join(__dirname, '/dynamicViews'));
 // bodyParser.urlencoded解析form表单提交的数据
 app.use(bodyParser.urlencoded({extended: false})); 
 // bodyParser.json解析json数据格式的
@@ -17,7 +19,7 @@ app.use(express.static(path.join(__dirname, '/assets')));
 
 
 //通过ejs模板获取动态页面
-var css = fs.readFileSync(cssfile, 'utf8');//动态数据
+var css = fs.readFileSync('./dynamicViews/data/style.css', 'utf8');//动态数据
 var data={
   name : 'webarn',
   sex : '男',
