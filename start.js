@@ -3,14 +3,31 @@ request = require('request'),
 bodyParser = require('body-parser'),
 path=require("path");
 
+//使用express搭建服务器
 var app= express();
+//设置模板引擎为ejs
+app.set('view engine','ejs');
 // bodyParser.urlencoded解析form表单提交的数据
 app.use(bodyParser.urlencoded({extended: false})); 
 // bodyParser.json解析json数据格式的
 app.use(bodyParser.json());
 
-//获取静态资源的
+//获取静态页面
 app.use(express.static(path.join(__dirname, '/assets')));
+
+
+//通过ejs模板获取动态页面
+var css = fs.readFileSync(cssfile, 'utf8');//动态数据
+var data={
+  name : 'webarn',
+  sex : '男',
+  content : '参数,可以更改',
+  css:css,
+};
+app.get('/dynamicView',function (req, res) {
+    res.render('index',data)
+});
+
 
 
 
