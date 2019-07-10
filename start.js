@@ -1,6 +1,7 @@
 const express = require('express'),
 request = require('request'),
 bodyParser = require('body-parser'),
+fs=require('fs'),
 path=require("path");
 
 //使用express搭建服务器
