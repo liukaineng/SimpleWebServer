@@ -8,7 +8,7 @@ var app= express();
 //设置模板引擎为ejs
 app.set('view engine','ejs');
 //设置引擎模板的路径，默认为同级目录的views
-app.set('views', path.join(__dirname, '/dynamicViews'));
+app.set('views', path.join(__dirname, '/dynamicViews/views'));
 // bodyParser.urlencoded解析form表单提交的数据
 app.use(bodyParser.urlencoded({extended: false})); 
 // bodyParser.json解析json数据格式的
