@@ -1,0 +1,41 @@
+*{
+          padding: 0;
+          margin: 0;
+}
+body{
+          background-color: rgb(238, 238, 238);
+}
+.container{   
+          margin: 0 auto;
+          padding: 15px;     
+          max-width: 840px;
+          background-color: white;
+}
+.box{
+          padding: 15px;        
+}
+.box1{
+          padding: 10px;    
+}
+.mt-1{
+          margin-top: 5px;  
+}
+.mt-2{
+          margin-top: 20px;
+}
+/* 首行空两格 */
+.retract{
+          text-indent: 2em;
+}
+/* 水平居中 */
+.text-center
+{
+          text-align: center; 
+}
+/* 水平垂直居中 */
+.center{
+          display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
