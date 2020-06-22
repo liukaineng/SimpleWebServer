@@ -12,6 +12,6 @@
       "body-parser": "^1.18.3",
       "express": "^4.16.3",
         "ejs": "^2.6.1",
-      "request": "^2.87.0"
+      "nodejs-websocket": "^1.7.2"
     }
   }
