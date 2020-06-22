@@ -2,11 +2,95 @@
 <html>
 
 <head>
-    <title>Test</title>
+    <title>SimpleWebServer</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/jquery.min.3.4.1.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <p>this is test page !</p>
+    <div class="container">
+        <h1 class="text-center">简单的WebServer(nodejs)</h1>
+        <div class="box">
+            <h3>一、发送Get请求(打开一个动态页面)</h3>
+            <div class="box1">
+                <form action="/get">
+                    姓名:<br>
+                    <input type="text" name="name" value="刘XX"><br>
+                    性别:<br>
+                    <input type="text" name="sex" value="男">
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+            <h3>二、发送Post请求(ajax)</h3>
+            <div class="box1">
+                <textarea id='post' rows="5" placeholder='请输入参数,格式为{"name":"刘XX","Sex":"男"}'></textarea>
+                <button onclick="post()">Submit</button>
+                <div id="post-msg">
+                </div>
+            </div>
+            <h3>二、发送Websocket消息（会广播给所有的页面）</h3>
+            <div class="box1">
+                <textarea id='websocket' rows="5" placeholder='请输入消息'></textarea>
+                <button onclick="websocketSend()">Submit</button>
+                <div id="websocket-msg">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
+<script>
+    //发送post请求
+    var post = function () {
+        var param = $('#post').val();
+        console.dir(param);
+        $.ajax({
+            url: '/post',
+            type: 'POST',
+            data: param,
+            cache: true,
+            processData: false,
+            contentType: "application/json;charset=utf-8",
+            dataType: 'json',
+            beforeSend: function (XMLHttpRequest) {
+                console.dir('beforeSend...');
+            },
+            success: function (data) {
+                var msg = "<div>服务器返回值：" + JSON.stringify(data) + "</div>";
+                $("#post-msg").append(msg);
+            },
+            error: function (err) {
+                console.dir('error...');
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                console.dir('complete...');
+            }
+        });
+    }
+    //websocket消息
+    var url = 'ws://' + location.hostname + ':1180';
+    let websocket = new WebSocket(url);
+    websocket.onopen = () => {
+        console.log('websocket连接开启...')
+    }
+    //发送消息
+    var websocketSend = function () {
+        if (websocket && typeof websocket.send === 'function') {
+            websocket.send($('#websocket').val())
+        }
+    }
+    //接收消息
+    websocket.onmessage = event => {
+        let data = event.data
+        var msg = "<div>广播消息：" + data + "</div>";
+                $("#websocket-msg").append(msg);
+    }
+    //记得关闭连接
+    window.onunload = () => {       
+        websocket.close()
+    }
+</script>
+
 </html>
